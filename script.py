@@ -1,16 +1,17 @@
 from __future__ import unicode_literals
 import tkinter
 from tkinter import *
+from tkinter import filedialog
 from PIL import ImageTk,Image
 import os
 
 tk = Tk()
 
-bg = Image.open("background2.jpg")
-bg_lbl = ImageTk.PhotoImage(bg)
-label = Label(image=bg_lbl)
-label.image = bg_lbl
-label.place(relheight=1,relwidth=1)
+# bg = Image.open("background2.jpg")
+# bg_lbl = ImageTk.PhotoImage(bg)
+# label = Label(image=bg_lbl)
+# label.image = bg_lbl
+# label.place(relheight=1,relwidth=1)
 
 class GUI_TK:
     def __init__(self,master):
@@ -25,8 +26,27 @@ class GUI_TK:
         self.entry = Entry(width=30)
         self.entry.pack(pady="8")
 
+        self.path_label = Label(text="Choose file destination : ")
+        self.path_label.pack(pady="8")
+        self.path_button = Button(text="Select", command=self.pathSelect)
+        self.path_button.pack(pady="8")
+
         self.button = Button(text="Download", command=lambda: download(),pady="3",padx="3",activebackground="gray",activeforeground="white")
         self.button.pack(pady="10")
+
+    def pathSelect(self):
+        path = filedialog.askdirectory()
+        self.path_label.config(text=path)
+
+
+def readFile(self, file_name):
+        global desktop
+        file = desktop + file_name
+
+        with open(file, "r") as f:
+            songs = f.read().splitlines()
+
+        return songs
 
 def download():
     raise SystemExit
