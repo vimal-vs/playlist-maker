@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
-import tkinter
 from tkinter import *
 from tkinter import filedialog
+from tkinter.filedialog import askopenfile
 from PIL import ImageTk,Image
-import os
 
 tk = Tk()
 
@@ -20,33 +19,28 @@ class GUI_TK:
         self.master.iconbitmap("favicon.ico")
         self.master.geometry("800x600")
 
-        self.label = Label(text="Enter the file name: ",font="IMPRISHA 12")
-        self.label.pack(pady="3")
+        self.file_label = Label(text="Browse file :")
+        self.file_label.pack(pady="3")
+        self.file_button = Button(text="Select", command=self.readFile)
+        self.file_button.pack(pady="8")
 
-        self.entry = Entry(width=30)
-        self.entry.pack(pady="8")
-
-        self.path_label = Label(text="Choose file destination : ")
+        self.path_label = Label(text="Choose file destination :")
         self.path_label.pack(pady="8")
         self.path_button = Button(text="Select", command=self.pathSelect)
         self.path_button.pack(pady="8")
 
-        self.button = Button(text="Download", command=lambda: download(),pady="3",padx="3",activebackground="gray",activeforeground="white")
-        self.button.pack(pady="10")
+        self.download_button = Button(text="Download",pady="3",padx="3",activebackground="gray",activeforeground="white")
+        self.download_button.pack(pady="10")
+
+    def readFile(self):
+        filePath = askopenfile(mode='r',filetypes=[("all files","*.*")])
+        self.file_label.config(text=filePath)
 
     def pathSelect(self):
         path = filedialog.askdirectory()
-        self.path_label.config(text=path)
+        if(path):
+            self.path_label.config(text=path)
 
-
-def readFile(self, file_name):
-        global desktop
-        file = desktop + file_name
-
-        with open(file, "r") as f:
-            songs = f.read().splitlines()
-
-        return songs
 
 def download():
     raise SystemExit
